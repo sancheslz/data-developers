@@ -7,6 +7,29 @@ input[type=text] {
     margin-right: 1em;
 }
 
-.row {
-    margin-bottom: 1em;
+
+.card-img {
+    display: block;
+    border-radius: 100%;
+    margin: 1em auto;
+    height: 7em;
+    width: 7em;
+}
+
+.dev-tech {
+    display: inline-block;
+    height: 2em;
+    width: 2em;
+    background-size: contain;
+}
+.python {
+    background-image: url('python.png');
+}
+
+.java {
+    background-image: url('java.png');
+}
+
+.javascript {
+    background-image: url('javascript.png');
 }
