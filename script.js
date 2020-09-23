@@ -42,6 +42,9 @@ fetch('http://localhost:3001/devs')
 function render(developers) {
     div_devs = document.getElementById('devs')
     div_devs.innerHTML = ''
+    
+    counter = document.getElementById('dev_count')
+    counter.innerText = `${developers.length} dev(s) encontrado(s)`
 
     developers.forEach(developer => {
         card(div_devs, developer)
@@ -104,8 +107,8 @@ card = (div_devs, developer) => {
     div_devs.appendChild(div)
 }
 
-filter_devs = (input_value) => {
-    developer = input_value.target.value
+filter_devs = () => {
+    developer = document.getElementById('search_devs').value
     render(developers.filter((dev) => {
         if (dev.search.includes(developer)) { return true}
     }))
@@ -113,12 +116,8 @@ filter_devs = (input_value) => {
 }
 
 window.addEventListener('load', () => {
-    name_search = document.getElementById('search_devs')
-    name_search.addEventListener('input', filter_devs)
-
-    all_checkbox = document.getElementsByName('dev-options')
-    all_checkbox.forEach((checkbox) => {
-        checkbox.addEventListener('input',
-        () => {})
+    document.getElementById('search_devs').addEventListener('input', filter_devs)
+    document.getElementsByName('dev-options').forEach((checkbox) => {
+        checkbox.addEventListener('input', filter_devs)
     })
 })

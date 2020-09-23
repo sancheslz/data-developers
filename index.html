@@ -18,31 +18,52 @@
                 <div class="search">
                     <input class="form-control" type="text" id="search_devs">
                 </div>
-                <div id="search-options">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="dev-options" id="javascript">
-                            JavaScript
-                        </label>
+                <div class="row">
+                    <div id="search-options" class="col-8">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="dev-options" id="javascript">
+                                JavaScript
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="dev-options" id="java">
+                                Java
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="dev-options" id="python">
+                                Python
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="dev-options" id="java">
-                            Java
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="dev-options" id="python">
-                            Python
-                        </label>
+                    <div id="filter-options" class="col-4">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" checked="checked" class="form-check-input" name="filter" id="and">
+                                E
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="filter" id="or">
+                                OU
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="row">
+            <div class="col">
+                <h5 id="dev_count">XX Devs Encontrados</h5>
+            </div>
+        </div>
         <div class="row" id="devs">
         </div>
 
