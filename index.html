@@ -1,13 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-    <title>Document</title>
+    <title>Data Devs</title>
 </head>
+
 <body>
-    
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Data Devs</h1>
+                <div class="search">
+                    <input class="form-control" type="text" id="search_devs">
+                </div>
+                <div id="search-options">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="dev-options" id="javascript">
+                            JavaScript
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="dev-options" id="java">
+                            Java
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="dev-options" id="python">
+                            Python
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="card col-lg-4 col-md-6 col-sm-12" style="width: 18rem;">
+                <img src="" class="card-img-top" alt="Developer Image">
+                <div class="card-body">
+                    <h5 class="card-title">Developer Name</h5>
+                    <p class="card-text">Developer Information</p>
+                    <div class="dev-tech">
+                        <img alt="logo">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </body>
+
 </html>
