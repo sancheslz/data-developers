@@ -21,6 +21,7 @@ input[type=text] {
     height: 2em;
     width: 2em;
     background-size: contain;
+    margin-right: 1em;
 }
 .python {
     background-image: url('python.png');

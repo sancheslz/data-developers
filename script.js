@@ -1,5 +1,52 @@
-card = (data) => {
-    devs = document.getElementById('devs')
+developers = null
+
+normalize = (data) => {
+    return data.replaceAll(' ','')
+                .toLowerCase()
+                .replaceAll('á','a')
+                .replaceAll('é','e')
+                .replaceAll('í','i')
+                .replaceAll('ó','o')
+                .replaceAll('ú','u')
+}
+
+recoverData = (data) => {
+    developers = data.map((person) => {
+        return {
+            id: person.id,
+            name: person.name,
+            email: person.email,
+            photo: person.picture,
+            technologies: person.programmingLanguages.map( (technology) => {
+                return technology.language.toLowerCase()
+            }),
+            search: normalize(person.name)
+        }
+    })
+}
+
+fetch('http://localhost:3001/devs')
+    .then((response) => {
+        response.json().then(
+            data => {
+                recoverData(data)
+                render(developers)
+            })
+    })
+    .catch((response) => {
+        console.log(response)
+    })
+
+function render(developers) {
+    div_devs = document.getElementById('devs')
+    div_devs.innerHTML = ''
+
+    developers.forEach(developer => {
+        card(div_devs, developer)
+    })
+}
+
+card = (div_devs, developer) => {
 
     div = document.createElement('div')
     div.classList = "col-lg-6 col-md-12 col-sm-12"
@@ -13,19 +60,22 @@ card = (data) => {
 
     dev_name = document.createElement('h5')
     dev_name.classList = "card-title"
-    dev_name.innerText = "Ediane Araújo"
-    
+    dev_name.innerText = developer.name
+
     dev_email = document.createElement('p')
     dev_email.classList = "card-text"
-    dev_email.innerText = "ediante.araujo@example.com"
-    
-    // Dev Technologies
-    dev_tech = document.createElement('div')
-    dev_tech.classList = "dev-tech python"
+    dev_email.innerText = developer.email
 
     div_body.appendChild(dev_name)
     div_body.appendChild(dev_email)
-    div_body.appendChild(dev_tech)
+
+    // Dev Technologies
+    developer.technologies.forEach((technology) => {
+        dev_tech = document.createElement('div')
+        dev_tech.classList = `dev-tech ${technology}`
+        div_body.appendChild(dev_tech)
+    })
+
     div_content.appendChild(div_body)
 
     // Left Side
@@ -33,10 +83,10 @@ card = (data) => {
     div_image.classList = "col-4 img-side"
 
     dev_photo = document.createElement('img')
-    dev_photo.src = "https://randomuser.me/api/portraits/women/13.jpg"
-    dev_photo.classList ="card-img"
+    dev_photo.src = developer.photo
+    dev_photo.classList = "card-img"
     div_image.appendChild(dev_photo)
-    
+
     // Construct the Card
     div_card = document.createElement('div')
     div_card.classList = 'card'
@@ -49,11 +99,5 @@ card = (data) => {
     div_card.appendChild(div_row)
     div.appendChild(div_card)
 
-    devs.appendChild(div)
+    div_devs.appendChild(div)
 }
-
-function render() {
-    card()
-}
-
-window.addEventListener('load', render)
