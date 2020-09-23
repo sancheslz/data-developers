@@ -8,6 +8,8 @@ normalize = (data) => {
                 .replaceAll('í','i')
                 .replaceAll('ó','o')
                 .replaceAll('ú','u')
+                .replaceAll('ã','a')
+                .replaceAll('ê','e')
 }
 
 recoverData = (data) => {
@@ -101,3 +103,22 @@ card = (div_devs, developer) => {
 
     div_devs.appendChild(div)
 }
+
+filter_devs = (input_value) => {
+    developer = input_value.target.value
+    render(developers.filter((dev) => {
+        if (dev.search.includes(developer)) { return true}
+    }))
+
+}
+
+window.addEventListener('load', () => {
+    name_search = document.getElementById('search_devs')
+    name_search.addEventListener('input', filter_devs)
+
+    all_checkbox = document.getElementsByName('dev-options')
+    all_checkbox.forEach((checkbox) => {
+        checkbox.addEventListener('input',
+        () => {})
+    })
+})
