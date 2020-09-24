@@ -70,7 +70,11 @@ function render(developers) {
         counter.innerText = `${developers.length} devs encontrados`
     }
 
-    developers.forEach(developer => {
+    developers.sort((a, b) => {
+        if (a.search > b.search) { return 1 }
+        else if (a.search < b.search) { return -1 }
+        else { return 0 }
+    }).forEach(developer => {
 
         card(div_devs, developer)
 
