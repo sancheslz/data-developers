@@ -108,16 +108,53 @@ card = (div_devs, developer) => {
 }
 
 filter_devs = () => {
-    developer = document.getElementById('search_devs').value
-    render(developers.filter((dev) => {
-        if (dev.search.includes(developer)) { return true}
-    }))
+    dev_name = document.getElementById('search_devs').value
 
+    search_mode =  Array.from(
+        document.getElementsByName('filter')).filter(
+            (option) => {
+                if(option.checked === true) { return true}
+            }
+        )
+
+    language =  Array.from(
+        document.getElementsByName('dev-options')).filter(
+            (option) => {
+                if(option.checked === true) { return true}
+            }
+        )
+    
+    check_languages = (dev) => {
+        if(search_mode[0].id === 'and') {
+            return language.every((lang) => {
+                if(dev.technologies.includes(lang.id)) { 
+                    return true
+                }
+            })
+        } else if(search_mode[0].id === 'or'){
+            return language.some((lang) => {
+                if(dev.technologies.includes(lang.id)) { 
+                    return true
+                }
+            })
+        }
+    }
+
+    render(developers.filter((dev) => {
+        
+        if (dev.search.includes(dev_name) && check_languages(dev)) {
+            return true
+        }}
+
+    ))
 }
 
 window.addEventListener('load', () => {
     document.getElementById('search_devs').addEventListener('input', filter_devs)
     document.getElementsByName('dev-options').forEach((checkbox) => {
+        checkbox.addEventListener('input', filter_devs)
+    })
+    document.getElementsByName('filter').forEach((checkbox) => {
         checkbox.addEventListener('input', filter_devs)
     })
 })

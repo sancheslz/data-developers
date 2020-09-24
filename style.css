@@ -39,6 +39,10 @@ input[type=text] {
     text-align: right;
 }
 
-h5 {
+h1, h5 {
     margin: 1em auto;
+}
+
+.card {
+    margin: 0.5em 0;
 }
