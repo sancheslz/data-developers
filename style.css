@@ -24,15 +24,15 @@ input[type=text] {
     margin-right: 1em;
 }
 .python {
-    background-image: url('python.png');
+    background-image: url('./assets/python.png');
 }
 
 .java {
-    background-image: url('java.png');
+    background-image: url('./assets/java.png');
 }
 
 .javascript {
-    background-image: url('javascript.png');
+    background-image: url('./assets/javascript.png');
 }
 
 #filter-options {

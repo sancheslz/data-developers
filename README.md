@@ -40,6 +40,20 @@ After normalize all developers, the `render` function shows the list of develope
 
 All `inputs` have an `eventListener`responsible to get every modification and call the `filter_devs` function. This function get the values of each input and according the parameters passed returns a list of developers.
 
+## How to Use
+
+### Using the Backend
+
+On backend folder, type:
+
+- `npm install` to install all dependences
+- `npm start` to run the server
+
+### Using the Frontend
+
+Open the `index.html` file with or without the `liveserver` to use it.
+
+
 ## Final Notes
 
 The list of languages is hard-coded, a cool idea would be create it dynamically allowing the filters grow up easily.
