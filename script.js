@@ -1,73 +1,99 @@
-developers = null
+let developers = null
 
+
+// Clear the received string
 normalize = (data) => {
-    return data.replaceAll(' ','')
-                .toLowerCase()
-                .replaceAll('á','a')
-                .replaceAll('é','e')
-                .replaceAll('í','i')
-                .replaceAll('ó','o')
-                .replaceAll('ú','u')
-                .replaceAll('ã','a')
-                .replaceAll('ê','e')
+
+    return data.replaceAll(' ', '')
+        .toLowerCase()
+        .replaceAll('á', 'a')
+        .replaceAll('é', 'e')
+        .replaceAll('í', 'i')
+        .replaceAll('ó', 'o')
+        .replaceAll('ú', 'u')
+        .replaceAll('ã', 'a')
+        .replaceAll('ê', 'e')
+
 }
 
-recoverData = (data) => {
+
+// Convert developer's data to a clear pattern
+loadDevelopers = (data) => {
+
     developers = data.map((person) => {
+
         return {
             id: person.id,
             name: person.name,
             email: person.email,
             photo: person.picture,
-            technologies: person.programmingLanguages.map( (technology) => {
+            technologies: person.programmingLanguages.map((technology) => {
                 return technology.language.toLowerCase()
             }),
             search: normalize(person.name)
+
         }
     })
+
 }
 
+
+// Load backend data
 fetch('http://localhost:3001/devs')
     .then((response) => {
+
         response.json().then(
             data => {
-                recoverData(data)
+                loadDevelopers(data)
                 render(developers)
             })
+
     })
-    .catch((response) => {
-        console.log(response)
+    .catch(() => {
+        let counter = document.getElementById('dev_count')
+        counter.innerText = 'Erro ao carregar os dados, tente novamente mais tarde'
     })
 
+
+// Render all developers according the filter
 function render(developers) {
-    div_devs = document.getElementById('devs')
+
+    let div_devs = document.getElementById('devs')
     div_devs.innerHTML = ''
-    
-    counter = document.getElementById('dev_count')
-    counter.innerText = `${developers.length} dev(s) encontrado(s)`
+
+    let counter = document.getElementById('dev_count')
+    if (developers.length == 0) {
+        counter.innerText = 'Nenhum registro encontrado'
+    } else if (developers.length == 1) {
+        counter.innerText = `${developers.length} dev encontrado`
+    } else {
+        counter.innerText = `${developers.length} devs encontrados`
+    }
 
     developers.forEach(developer => {
+
         card(div_devs, developer)
+
     })
+
 }
 
-card = (div_devs, developer) => {
 
-    div = document.createElement('div')
-    div.classList = "col-lg-6 col-md-12 col-sm-12"
+// Structure of the cards
+function card(div_devs, developer) {
 
-    // Right side
-    div_content = document.createElement('div')
+    // Right side of Card
+    let div_content = document.createElement('div')
     div_content.classList = "col-8"
 
-    div_body = document.createElement('div')
+    let div_body = document.createElement('div')
     div_body.classList = "card-body"
 
-    dev_name = document.createElement('h5')
+    let dev_name = document.createElement('h5')
     dev_name.classList = "card-title"
     dev_name.innerText = developer.name
 
-    dev_email = document.createElement('p')
+    let dev_email = document.createElement('p')
     dev_email.classList = "card-text"
     dev_email.innerText = developer.email
 
@@ -76,28 +102,33 @@ card = (div_devs, developer) => {
 
     // Dev Technologies
     developer.technologies.forEach((technology) => {
-        dev_tech = document.createElement('div')
+
+        let dev_tech = document.createElement('div')
         dev_tech.classList = `dev-tech ${technology}`
         div_body.appendChild(dev_tech)
+
     })
 
     div_content.appendChild(div_body)
 
-    // Left Side
-    div_image = document.createElement('div')
+    // Left Side of Card
+    let div_image = document.createElement('div')
     div_image.classList = "col-4 img-side"
 
-    dev_photo = document.createElement('img')
+    let dev_photo = document.createElement('img')
     dev_photo.src = developer.photo
     dev_photo.classList = "card-img"
     div_image.appendChild(dev_photo)
 
     // Construct the Card
-    div_card = document.createElement('div')
+    let div_card = document.createElement('div')
     div_card.classList = 'card'
 
-    div_row = document.createElement('div')
+    let div_row = document.createElement('div')
     div_row.classList = 'row no-gutters'
+
+    let div = document.createElement('div')
+    div.classList = "col-lg-6 col-md-12 col-sm-12"
 
     div_row.appendChild(div_image)
     div_row.appendChild(div_content)
@@ -107,54 +138,66 @@ card = (div_devs, developer) => {
     div_devs.appendChild(div)
 }
 
-filter_devs = () => {
-    dev_name = document.getElementById('search_devs').value
 
-    search_mode =  Array.from(
-        document.getElementsByName('filter')).filter(
+// Filter of Developers by Technology (inclusive and exclusive way)
+function filter_devs() {
+
+    let dev_name = normalize(document.getElementById('search_devs').value)
+
+    let search_mode = Array.from(
+        document.getElementsByName('and_or_filter')).filter(
             (option) => {
-                if(option.checked === true) { return true}
+                if (option.checked === true) { return true }
             }
         )
 
-    language =  Array.from(
-        document.getElementsByName('dev-options')).filter(
+    let language = Array.from(
+        document.getElementsByName('dev_language')).filter(
             (option) => {
-                if(option.checked === true) { return true}
+                if (option.checked === true) { return true }
             }
         )
-    
+
     check_languages = (dev) => {
-        if(search_mode[0].id === 'and') {
+        if (search_mode[0].id === 'and') {
             return language.every((lang) => {
-                if(dev.technologies.includes(lang.id)) { 
+                if (dev.technologies.includes(lang.id)) {
                     return true
                 }
             })
-        } else if(search_mode[0].id === 'or'){
+        } else if (search_mode[0].id === 'or') {
             return language.some((lang) => {
-                if(dev.technologies.includes(lang.id)) { 
+                if (dev.technologies.includes(lang.id)) {
                     return true
                 }
             })
         }
     }
 
+    // Call the render function after filtering
     render(developers.filter((dev) => {
-        
+
         if (dev.search.includes(dev_name) && check_languages(dev)) {
             return true
-        }}
+        }
+
+    }
 
     ))
 }
 
+
+// Add event lister on input filters
 window.addEventListener('load', () => {
+
     document.getElementById('search_devs').addEventListener('input', filter_devs)
-    document.getElementsByName('dev-options').forEach((checkbox) => {
+
+    document.getElementsByName('dev_language').forEach((checkbox) => {
         checkbox.addEventListener('input', filter_devs)
     })
-    document.getElementsByName('filter').forEach((checkbox) => {
+
+    document.getElementsByName('and_or_filter').forEach((checkbox) => {
         checkbox.addEventListener('input', filter_devs)
     })
+
 })
